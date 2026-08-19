@@ -64,3 +64,4 @@ networks:
 # 로컬 DB 데이터 보존용 볼륨 선언
 volumes:
   mysql_data:
+  qdrant_data:
