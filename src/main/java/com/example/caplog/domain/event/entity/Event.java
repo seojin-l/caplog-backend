@@ -1,0 +1,79 @@
+package com.example.caplog.domain.event.entity;
+
+import com.example.caplog.domain.images.entity.Images;
+import com.example.caplog.domain.schedule.entity.Schedule;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Event {
+    public static Event createEvent(
+            Schedule schedule,
+            Images image,
+            String title,
+            String location,
+            String details,
+            LocalDateTime startAt,
+            LocalDateTime endAt
+    ) {
+        Event event = new Event();
+
+        event.schedule = schedule;
+        event.images = image;
+        event.title = title;
+        event.location = location;
+        event.details = details;
+        event.startAt = startAt;
+        event.endAt = endAt;
+
+        return event;
+    }
+
+    public void updateEvent(
+            String title,
+            String location,
+            String details,
+            LocalDateTime startAt,
+            LocalDateTime endAt
+    ) {
+        this.title = title;
+        this.location = location;
+        this.details = details;
+        this.startAt = startAt;
+        this.endAt = endAt;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long eventId;
+
+    @JoinColumn(name = "schedule_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Schedule schedule;
+
+    @JoinColumn(name = "image_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Images images;
+
+    private String title;
+
+    private String location;
+
+    @Column(columnDefinition = "TEXT")
+    private String details;
+
+    private String videoUrl;
+
+    private LocalDateTime startAt;
+
+    private LocalDateTime endAt;
+}
