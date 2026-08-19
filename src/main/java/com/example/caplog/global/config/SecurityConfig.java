@@ -38,7 +38,8 @@ public class SecurityConfig {
                                 "/v3/api-docs",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
-                                "/api/auth/**"    // 로그인 및 회원가입 시 열어둘 주소
+                                "/api/auth/**"
+                                // 로그인 및 회원가입 시 열어둘 주소
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -70,11 +71,14 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-//        // 프론트에서 요청한 CORS 허용 설정
-//        configuration.setAllowedOrigins(List.of(
-//                "http://localhost:5173",
-//                "http://192.168.25.2:5173"
-//        ));
+       // 프론트에서 요청한 CORS 허용 설정
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "http://192.168.25.2:5173",
+                "http://10.96.155.62:5173",
+                "https://14th-caplog.vercel.app",
+                "https://www.caplog.site"
+        ));
 
         // 테스트 용으로 다 열어놓기
         configuration.setAllowedOriginPatterns(List.of("*"));
